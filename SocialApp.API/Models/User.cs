@@ -13,6 +13,6 @@ namespace SocialApp.API.Models
 
         public byte[] PasswordHash { get; set; }
 
-        public byte[] PasswordSalr { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }
