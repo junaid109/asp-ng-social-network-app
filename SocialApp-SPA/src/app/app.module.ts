@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ValueComponent } from './value/value.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -8,6 +9,7 @@ import { NavComponent } from './nav/nav.component';
 
 import {MenubarModule} from 'primeng/menubar';
 import {MenuItem} from 'primeng/api';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
    declarations: [
@@ -19,8 +21,11 @@ import {MenuItem} from 'primeng/api';
       BrowserModule,
       HttpClientModule,
       MenubarModule,
+      FormsModule,
    ],
-   providers: [],
+   providers: [
+      AuthService
+   ],
    bootstrap: [
       AppComponent,
    ]
