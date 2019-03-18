@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SocialApp.API.Data;
+using SocialApp.API.Models;
 
 namespace SocialApp.API.Controllers
 {
@@ -23,7 +24,7 @@ namespace SocialApp.API.Controllers
 
         // GET api/values
         [HttpGet]
-        public IActionResult GetValues()
+        public async Task<IActionResult> GetValues()
         {
             var listValues = DataContext.Values.ToList();
 
@@ -32,7 +33,7 @@ namespace SocialApp.API.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult GetValue(int id)
+        public async Task<IActionResult> GetValue(int id)
         {
             var value = DataContext.Values.First(c => c.Id == id);
 
@@ -41,9 +42,17 @@ namespace SocialApp.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public IActionResult Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] string value)
         {
-            var valueToAdd = DataContext.Add(value);
+
+            var valueToAdd = new Value
+            {
+                Name = value
+            };
+
+            DataContext.Add(value);
+
+            await DataContext.SaveChangesAsync();
 
             return Ok(valueToAdd);
         }

@@ -15,10 +15,10 @@ namespace SocialApp.API
 
         public IConfiguration Configuration { get; }
 
-
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            _environment = environment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
