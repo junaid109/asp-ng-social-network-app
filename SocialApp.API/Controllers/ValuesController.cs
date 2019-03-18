@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using SocialApp.API.Data;
@@ -9,8 +10,8 @@ using SocialApp.API.Models;
 
 namespace SocialApp.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    [EnableCors(PolicyName = "AllowAll")]
     [Produces("application/json")]
     [ApiController]
     public class ValuesController : ControllerBase
@@ -32,6 +33,7 @@ namespace SocialApp.API.Controllers
         }
 
         // GET api/values/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetValue(int id)
         {
