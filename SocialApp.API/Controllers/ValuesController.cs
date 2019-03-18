@@ -50,7 +50,7 @@ namespace SocialApp.API.Controllers
                 Name = value
             };
 
-            DataContext.Add(value);
+            await DataContext.Values.AddAsync(valueToAdd);
 
             await DataContext.SaveChangesAsync();
 
