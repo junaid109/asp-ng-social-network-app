@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SocialApp.API.Authorization;
 using SocialApp.API.Data;
 using System.Reflection;
 
@@ -25,7 +26,10 @@ namespace SocialApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration["ConnectionStrings:SocialAppDBString"];
+
             services.AddDbContext<AppDataContext>(o => o.UseSqlServer(connectionString));
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
 
             if(_environment.IsDevelopment())
             {
