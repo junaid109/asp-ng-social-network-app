@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-declare let altertify: any;
+declare let alertify: any;
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class AlertifyService {
 
 
   comfirm(message: string, okCallback: () => any) {
-    altertify.confrim(message, function(e) {
+    alertify.confrim(message, function(e) {
       if(e){
         okCallback();
       }
@@ -22,18 +22,18 @@ export class AlertifyService {
   }
 
   success(message: string){
-    altertify.success(message);
+    alertify.success(message);
   }
 
   error(message: string){
-    altertify.error(message);
+    alertify.error(message);
   }
 
   warning(message: string){
-    altertify.warning(message);
+    alertify.warning(message);
   }
 
   message(message: string){
-    altertify.message(message);
+    alertify.message(message);
   }
 }
