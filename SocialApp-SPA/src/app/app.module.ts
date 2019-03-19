@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
-import { BsDropdownModule } from "ngx-bootstrap/dropdown";
+import { BsDropdownModule, ModalModule, PaginationModule, DatepickerModule, TabsModule } from 'ngx-bootstrap';
 
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from './services/auth.service';
@@ -26,7 +26,7 @@ import { AlertifyService } from './services/alertify.service';
       HttpClientModule,
       MenubarModule,
       FormsModule,
-      BsDropdownModule.foRoot(),
+      BsDropdownModule.forRoot(),
    ],
    providers: [
       AuthService,
