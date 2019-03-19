@@ -5,12 +5,14 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
+import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from './services/auth.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
+import { AlertifyService } from './services/alertify.service';
 
 @NgModule({
    declarations: [
@@ -23,11 +25,13 @@ import { ErrorInterceptorProvider } from './services/error.interceptor';
       BrowserModule,
       HttpClientModule,
       MenubarModule,
-      FormsModule
+      FormsModule,
+      BsDropdownModule.foRoot(),
    ],
    providers: [
       AuthService,
-      ErrorInterceptorProvider
+      ErrorInterceptorProvider,
+      AlertifyService
    ],
    bootstrap: [
       AppComponent
