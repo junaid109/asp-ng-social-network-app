@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +31,7 @@ namespace SocialApp.API.Controllers
         {
             userForRegisterDTO.Username = userForRegisterDTO.Username.ToLower();
 
-            if(await _repo.UserExists(userForRegisterDTO.Username))
+            if (await _repo.UserExists(userForRegisterDTO.Username))
             {
                 return BadRequest("Username already exists");
             }
@@ -51,40 +49,48 @@ namespace SocialApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDTO userForLoginDTO)
         {
-            var userFromRepo = await _repo.Login(userForLoginDTO.Username.ToLower(), userForLoginDTO.Password);
-
-            if(userFromRepo == null)
+            try
             {
-                return Unauthorized();
-            }
+                var userFromRepo = await _repo.Login(userForLoginDTO.Username.ToLower(), userForLoginDTO.Password);
 
-            var claims = new[]
-            {
+                if (userFromRepo == null)
+                {
+                    return Unauthorized();
+                }
+
+                var claims = new[]
+                {
                 new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
                 new Claim(ClaimTypes.Name, userFromRepo.Username)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration
-                                                            .GetSection("AppSettings:Token")
-                                                            .Value));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration
+                                                                .GetSection("AppSettings:Token")
+                                                                .Value));
 
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(claims),
+                    Expires = DateTime.Now.AddDays(1),
+                    SigningCredentials = creds
+                };
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+
+                return Ok(new
+                {
+                    token = tokenHandler.WriteToken(token)
+                });
+
+            }
+            catch (Exception ex)
             {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(1),
-                SigningCredentials = creds
-            };
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-
-            return Ok(new
-            {
-                token = tokenHandler.WriteToken(token)
-            });
+                return StatusCode(500, "Unable to login user: " + userForLoginDTO.Username);
+            }
         }
     }
 }

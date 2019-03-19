@@ -46,7 +46,6 @@ namespace SocialApp.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] string value)
         {
-
             var valueToAdd = new Value
             {
                 Name = value
@@ -63,12 +62,14 @@ namespace SocialApp.API.Controllers
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
+
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+
         }
     }
 }
