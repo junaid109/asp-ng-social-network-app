@@ -1,16 +1,16 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md navbar-light bg-primary">
   <div class="container">
    <img src="../../assets/app-icon.png" style="width: 12%;">
-    <a class="navbar-brand" href="#"></a>
+    <a class="navbar-brand" [routerLink]="['/home']" ></a>
     <ul *ngIf="loggedin()"  class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#">Dashboard</a>
+      <li class="nav-item" routerLinkActive="active" >
+        <a class="nav-link" [routerLink]="['/members']">Dashboard</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Friends</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/liked-list']" >Friends</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Messages</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
     </ul>
 

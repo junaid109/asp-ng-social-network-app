@@ -13,13 +13,22 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { AlertifyService } from './services/alertify.service';
+import { MemberListComponent } from './member-list/member-list.component';
+import { LikedListComponent } from './liked-list/liked-list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { RouterModule } from '@angular/router';
+import { appRoutes } from './routes';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
    declarations: [
       AppComponent,
       NavComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      MemberListComponent,
+      LikedListComponent,
+      MessagesComponent
    ],
    imports: [
       BrowserModule,
@@ -27,11 +36,13 @@ import { AlertifyService } from './services/alertify.service';
       MenubarModule,
       FormsModule,
       BsDropdownModule.forRoot(),
+      RouterModule.forRoot(appRoutes),
    ],
    providers: [
       AuthService,
       ErrorInterceptorProvider,
-      AlertifyService
+      AlertifyService,
+      AuthGuard
    ],
    bootstrap: [
       AppComponent
