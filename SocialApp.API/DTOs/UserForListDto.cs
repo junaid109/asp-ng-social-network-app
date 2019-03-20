@@ -28,5 +28,7 @@ namespace SocialApp.API.DTOs
 
         public ICollection<Photo> Photos { get; set; }
 
+        public string PhotoUrl { get; set; }
+
     }
 }
