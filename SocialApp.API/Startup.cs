@@ -48,6 +48,8 @@ namespace SocialApp.API
 
             if(_environment.IsDevelopment())
             {
+                services.AddTransient<Seed>();
+
                 // Add Cors policy for cross-origin resource sharing
                 services.AddCors(options =>
                 {
@@ -88,7 +90,7 @@ namespace SocialApp.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, Seed seeder)
         {
             if (env.IsDevelopment())
             {
@@ -106,6 +108,8 @@ namespace SocialApp.API
 
                 // Enable cors with specified policy
                 app.UseCors("AllowAll");
+
+                seeder.SeedUsers();
             }
             else
             {
