@@ -1,58 +1,59 @@
 <div class="container mt-4">
   <div class="row">
+    <h1>
+      {{user.knownas}}'s Profile
+    </h1>
+  </div>
+  <div class="row">
     <div class="col-sm-4">
-    <div class="card">
-      <img class="card-img-top img-thumbnail" src="{{user.photoUrl}}" alt="{{user?.knownas}}">
-      <div class="card-body">
-        <strong> 
-          Location:
-        </strong>
-        <p>{{user?.city}}, {{user?.country}}</p>
+      <div class="card">
+        <img class="card-img-top img-thumbnail" src="{{user.photoUrl}}" alt="{{user?.knownas}}">
+        <div class="card-body">
+          <strong>
+            Location:
+          </strong>
+          <p>{{user?.city}}, {{user?.country}}</p>
+        </div>
+        <div>
+          <strong>Age:</strong>
+          <p>{{user?.age}}</p>
+        </div>
+        <div>
+          <strong>Last Active:</strong>
+          <p>{{user?.lastActive}}</p>
+        </div>
+        <div>
+          <strong>Member since:</strong>
+          <p>{{user?.created}}</p>
+        </div>
       </div>
-      <div>
-        <strong>Age:</strong>
-        <p>{{user?.age}}</p>
+      <div class="card-footer">
+        <div class="btn-group d-flex">
+          <button class="btn btn-primary">Like</button>
+          <button class="btn btn-success">Message</button>
+        </div>
       </div>
-
-      <div>
-        <strong>Last Active:</strong>
-        <p>{{user?.lastActive}}</p>
-      </div>
-
-      <div>
-        <strong>Member since:</strong>
-        <p>{{user?.created}}</p>
-      </div>
-    </div>
-    <div class="card-footer">
-      <div class="btn-group d-flex">
-      <button class="btn btn-primary">Like</button>
-      <button class="btn btn-success">Message</button>
-      </div>
-    </div>
-
     </div>
 
     <div class="col-sm-4">
       <div class="tab-panel">
         <tabset class="member-tabset">
-          <tab heading="About {{user?.knownas}}"> 
+          <tab heading="About {{user?.knownas}}">
             <h4>Description</h4>
             <p>{{user?.introduction}}</p>
             <h4>Looking for</h4>
             <p>{{user?.hobbies}}</p>
           </tab>
           <tab heading="Interests">
-              <h4>Interests</h4>
-              <p>{{user?.interests}}</p>
+            <h4>Interests</h4>
+            <p>{{user?.interests}}</p>
           </tab>
           <tab heading="Photos">
-              <h4>Photos</h4>
-              <p>{{user?.interests}}</p>
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"> </ngx-gallery>
           </tab>
           <tab heading="Messages">
-              <h4>Messages</h4>
-              <p>{{user?.interests}}</p>
+            <h4>Messages</h4>
+            <p>{{user?.interests}}</p>
           </tab>
         </tabset>
       </div>
