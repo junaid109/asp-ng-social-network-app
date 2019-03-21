@@ -8,7 +8,7 @@ export interface User {
     age: NumberValueAccessor;
     created: Date;
     lastActive: Date;
-    photUrl: string;
+    photoUrl: string;
     city: string;
     country: string;
     interests?: string;

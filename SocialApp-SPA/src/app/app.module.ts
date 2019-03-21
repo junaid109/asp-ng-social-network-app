@@ -22,6 +22,9 @@ import { appRoutes } from './routes';
 import { AuthGuard } from './guards/auth.guard';
 import { UserService } from './services/user.service';
 import { MemberCardComponent } from './members/member-card/member-card.component';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberListResolver } from './resolvers/member-list.resolver';
+import { MemberDetailResolver } from './resolvers/member-detail.resolver';
 
 export function tokenGetter(){
    return localStorage.getItem("token");
@@ -36,7 +39,8 @@ export function tokenGetter(){
       MemberListComponent,
       LikedListComponent,
       MessagesComponent,
-      MemberCardComponent
+      MemberCardComponent,
+      MemberDetailComponent
    ],
    imports: [
       BrowserModule,
@@ -44,12 +48,13 @@ export function tokenGetter(){
       MenubarModule,
       FormsModule,
       BsDropdownModule.forRoot(),
+      TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
       JwtModule.forRoot({
          config: {
             tokenGetter: tokenGetter,
-            whitelistedDomains: ['localhost:5000'],
-            blacklistedRoutes: ['localhoast:5000/api/auth']
+            whitelistedDomains: ['localhost:44367'],
+            blacklistedRoutes: ['localhoast:44367/api/auth']
          }
       })
    ],
@@ -59,6 +64,8 @@ export function tokenGetter(){
       AlertifyService,
       AuthGuard,
       UserService,
+      MemberDetailResolver,
+      MemberListResolver
    ],
    bootstrap: [
       AppComponent

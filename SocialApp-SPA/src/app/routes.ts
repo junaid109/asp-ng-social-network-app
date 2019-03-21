@@ -4,16 +4,21 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { MessagesComponent } from './messages/messages.component';
 import { LikedListComponent } from './liked-list/liked-list.component';
 import { AuthGuard } from './guards/auth.guard';
+import { MemberDetailComponent } from './members/member-detail/member-detail.component';
+import { MemberDetailResolver } from './resolvers/member-detail.resolver';
+import { MemberListResolver } from './resolvers/member-list.resolver';
 
 export const appRoutes: Routes = [
-    { path: '', component: HomeComponent },
+    { path: 'home', component: HomeComponent },
     {
         path: '',
         runGuardsAndResolvers: 'always',
         canActivate: [AuthGuard],
         children:
         [
-            { path: 'member-list', component: MemberListComponent },
+            { path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver} },
+            { path: 'members/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver} },
+
             { path: 'messages', component: MessagesComponent },
             { path: 'liked-list', component: LikedListComponent },
         ]
