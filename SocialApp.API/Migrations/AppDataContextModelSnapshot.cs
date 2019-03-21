@@ -31,6 +31,8 @@ namespace SocialApp.API.Migrations
 
                     b.Property<bool>("IsMainPhoto");
 
+                    b.Property<string>("PublicId");
+
                     b.Property<string>("Url");
 
                     b.Property<int>("UserId");

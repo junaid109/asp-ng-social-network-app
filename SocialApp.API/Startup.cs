@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SocialApp.API.Authorization;
 using SocialApp.API.Data;
+using SocialApp.API.Helpers;
 using System.Reflection;
 using System.Text;
 
@@ -36,6 +37,8 @@ namespace SocialApp.API
             services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddScoped<ISocialRepository, SocialRepository>();
+
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
