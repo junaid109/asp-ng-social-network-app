@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NavComponent } from './nav/nav.component';
 import { BsDropdownModule, ModalModule, PaginationModule, DatepickerModule, TabsModule } from 'ngx-bootstrap';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { MenubarModule } from 'primeng/menubar';
 import { AuthService } from './services/auth.service';
@@ -47,6 +48,7 @@ export function tokenGetter(){
       HttpClientModule,
       MenubarModule,
       FormsModule,
+      NgxGalleryModule,
       BsDropdownModule.forRoot(),
       TabsModule.forRoot(),
       RouterModule.forRoot(appRoutes),
