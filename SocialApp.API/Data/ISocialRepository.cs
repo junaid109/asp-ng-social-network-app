@@ -20,5 +20,7 @@ namespace SocialApp.API.Data
 
         Task<Photo> GetPhoto(int id);
 
+        Task<Photo> GetMainPhotoFromUser(int userId);
+
     }
 }

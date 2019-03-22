@@ -108,5 +108,40 @@ namespace SocialApp.API.Controllers
 
             return BadRequest("Could not add a photo");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> SetMainPhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _socialRepository.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+            {
+                return Unauthorized();
+            }
+
+            var photoFromRepo = await _socialRepository.GetPhoto(id);
+
+            if(photoFromRepo.IsMainPhoto)
+            {
+                return BadRequest("This is already the main photo.");
+            }
+
+            var currentMainPhoto = await _socialRepository.GetMainPhotoFromUser(userId);
+
+            currentMainPhoto.IsMainPhoto = false;
+
+            if(await _socialRepository.SaveAll())
+            {
+                return NoContent();
+            }
+
+            return BadRequest("Could not set to main");
+
+        }
     }
 }

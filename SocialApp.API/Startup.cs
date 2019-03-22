@@ -63,7 +63,6 @@ namespace SocialApp.API
                     {
                         p.AllowAnyOrigin()
                         .AllowAnyHeader()
-                        .AllowCredentials()
                         .AllowAnyMethod();
                     });
                 });
@@ -128,7 +127,7 @@ namespace SocialApp.API
                 //app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
