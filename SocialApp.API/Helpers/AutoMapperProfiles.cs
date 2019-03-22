@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SocialApp.API.Data;
 using SocialApp.API.DTOs;
 using SocialApp.API.Models;
 using System;
@@ -35,6 +36,8 @@ namespace SocialApp.API.Helpers
             CreateMap<Photo, PhotosForDetailedDto>();
 
             CreateMap<UserForUpdateDto, User>();
+
+            CreateMap<PhotoForCreationDto, PhotoForReturnDto>();
 
         }
     }

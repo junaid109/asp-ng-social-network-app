@@ -19,23 +19,25 @@ namespace SocialApp.API.Data
 
         public void SeedUsers()
         {
-            var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
-            var users = JsonConvert.DeserializeObject<List<User>>(userData);
-
-            foreach (var user in users)
+            if(_appData.Users.Any())
             {
-                byte[] passwordHash, passwordSalt;
+                var userData = System.IO.File.ReadAllText("Data/UserSeedData.json");
+                var users = JsonConvert.DeserializeObject<List<User>>(userData);
 
-                CreatePasswordHash("Password", out passwordHash, out passwordSalt);
+                foreach (var user in users)
+                {
+                    byte[] passwordHash, passwordSalt;
 
-                user.PasswordHash = passwordHash;
-                user.PasswordSalt = passwordSalt;
-                user.Username = user.Username.ToLower();
+                    CreatePasswordHash("Password", out passwordHash, out passwordSalt);
 
-                _appData.Users.Add(user);
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+                    user.Username = user.Username.ToLower();
+
+                    _appData.Users.Add(user);
+                }
+                _appData.SaveChanges();
             }
-
-            _appData.SaveChanges();
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
