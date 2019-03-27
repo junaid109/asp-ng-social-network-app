@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -20,10 +21,13 @@ namespace SocialApp.API.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public AuthController(IAuthRepository authRepository, IConfiguration configuration)
+        private readonly IMapper _mapper;
+
+        public AuthController(IAuthRepository authRepository, IConfiguration configuration, IMapper mapper)
         {
             _repo = authRepository;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
@@ -60,9 +64,9 @@ namespace SocialApp.API.Controllers
 
                 var claims = new[]
                 {
-                new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
-                new Claim(ClaimTypes.Name, userFromRepo.Username)
-            };
+                    new Claim(ClaimTypes.NameIdentifier, userFromRepo.Id.ToString()),
+                    new Claim(ClaimTypes.Name, userFromRepo.Username)
+                };
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration
                                                                 .GetSection("AppSettings:Token")
@@ -81,9 +85,12 @@ namespace SocialApp.API.Controllers
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
 
+                var user = _mapper.Map<UserForListDto>(userFromRepo);
+
                 return Ok(new
                 {
-                    token = tokenHandler.WriteToken(token)
+                    token = tokenHandler.WriteToken(token),
+                    user
                 });
 
             }

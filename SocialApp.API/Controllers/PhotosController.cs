@@ -7,7 +7,6 @@ using AutoMapper;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SocialApp.API.Data;
@@ -143,5 +142,53 @@ namespace SocialApp.API.Controllers
             return BadRequest("Could not set to main");
 
         }
+        
+        [HttpDelete("{id}"]
+        public async Task<IActionResult> DeletePhoto(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            {
+                return Unauthorized();
+            }
+
+            var user = await _socialRepository.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+            {
+                return Unauthorized();
+            }
+
+            var photoFromRepo = await _socialRepository.GetPhoto(id);
+
+            if(photoFromRepo.IsMainPhoto)
+            {
+                return BadRequest("You cannot delete your main photo");
+            }
+
+            if(photoFromRepo.PublicId != null)
+            {
+                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
+
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if (result.Result == "ok")
+                {
+                    _socialRepository.Delete(photoFromRepo);
+                }
+            }
+
+            if(photoFromRepo.PublicId == null)
+            {
+                _socialRepository.Delete(photoFromRepo);
+            }
+
+            if (await _socialRepository.SaveAll())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Failed to delete photo"); 
+        }
+
     }
 }

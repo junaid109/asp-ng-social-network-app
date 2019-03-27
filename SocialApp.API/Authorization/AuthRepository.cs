@@ -21,6 +21,7 @@ namespace SocialApp.API.Authorization
         public async Task<User> Login(string username, string password)
         {
             var user = await dataContext.Users
+                                        .Include(c => c.Photos)
                                         .FirstOrDefaultAsync(c => c.Username == username);
 
             if(user == null)
