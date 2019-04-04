@@ -21,9 +21,9 @@ export const appRoutes: Routes = [
             { path: 'members', component: MemberListComponent, resolve: { users: MemberListResolver } },
             { path: 'members/:id', component: MemberDetailComponent, resolve: { user: MemberDetailResolver } },
             { path: 'member/edit', component: MemberEditComponent, resolve: { user: MemberEditResolver }, canDeactivate: [PreventUnsavedChanges] },
-            { path: 'messages', component: MessagesComponent },
-            { path: 'lists', component: LikedListComponent },
+         //   {path: 'messages', component: MessagesComponent, resolve: {messages: Mes}},
+            {path: 'member-list', component: MemberListComponent, resolve: {users: MemberListResolver}},
         ]
     },
-    { path: '**', redirectTo: '', pathMatch: 'full' },
+    { path: '**', redirectTo: '/home', pathMatch: 'full' },
 ];
