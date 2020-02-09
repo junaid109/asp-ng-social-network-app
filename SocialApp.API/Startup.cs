@@ -120,7 +120,7 @@ namespace SocialApp.API
                 // Enable cors with specified policy
                 app.UseCors("AllowAll");
 
-              //  seeder.SeedUsers();
+                seeder.SeedUsers();
             }
             else
             {

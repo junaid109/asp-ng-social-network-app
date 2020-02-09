@@ -9,7 +9,6 @@ export class AlertifyService {
 
   constructor() { }
 
-
   comfirm(message: string, okCallback: () => any) {
     alertify.confrim(message, function(e) {
       if(e){
